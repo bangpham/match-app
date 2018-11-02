@@ -13,18 +13,17 @@
         <div class ="container-fluid">
             <form action="/register" method="post">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                    <small id="emailHelp" class="form-text text-muted">Let us keep in touch</small>
+                    <label for="email">Email address</label>
+                    <input name="email" type="email" class="form-control" id="email" placeholder="Enter email">
                 </div>
                 <div class="form-row">
                     <div class = "form-group col">
                         <label for="firstName">First Name</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="John">
+                        <input name="firstName" type="text" class="form-control" id="firstName" placeholder="John">
                     </div>
                     <div class="form-group col">
                         <label for="lastName">Last Name</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="Doe">
+                        <input name="lastName" type="text" class="form-control" id="lastName" placeholder="Doe">
                     </div>
                     </div>
                 <button type="submit" class="btn btn-primary">Register</button>

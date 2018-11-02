@@ -32,20 +32,27 @@ class User(db.Model):
 def main():
     return render_template("index.html")
 
-@app.route('/success/<name>')
-def success(name):
+@app.route('/success/<email>')
+def success(email):
 
     #backend logic
 
-    return render_template("landing.html", name=name)
+    return render_template("landing.html", email=email)
 
 
 @app.route('/register', methods=['POST'])
 def register():
-
-    #backend registration logic
-
-    return redirect(url_for('login'))
+    email = request.form['email']
+    user = User.query.filter_by(email=email).first()
+    if user:
+        return redirect(url_for('error', error="A user with that username already exists"))
+    else:
+        first = request.form['firstName']
+        last = request.form['lastName']
+        new_user = User(email, first, last)
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect(url_for('login'))
 
 
 @app.route('/login', methods=['GET', 'POST'])

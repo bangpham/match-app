@@ -6,7 +6,7 @@ class Time:
         pass
     
     def get_time(self):
-        current = int(datetime.datetime.utcnow().timestamp())
+        current = int(datetime.datetime.utcnow().timestamp()) *1000
         data = {}
         data['current'] = current
         return data

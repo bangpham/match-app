@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def main():
-    return "Match app v1.0"
+    return render_template("index.html")
 
 @app.route('/time')
 def get_time():

@@ -10,6 +10,10 @@
 <body>
     <h1>OOPS!</h1>
     <p>{{error_message}}. Please Try again.</p>
-    <a href="/login">Login</a>
+    {% if is_login %}
+        <a href="/login">Login</a>
+    {% else %}
+        <a href="/">Register</a>
+    {% endif %}
 </body>
 </html>

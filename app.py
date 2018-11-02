@@ -45,7 +45,8 @@ def register():
     email = request.form['email']
     user = User.query.filter_by(email=email).first()
     if user:
-        return redirect(url_for('error', error="A user with that username already exists"))
+        return render_template("error.html", error_message="A user with that username already exists!", is_login=False)
+        #return redirect(url_for('error', error_message="A user with that username already exists"))
     else:
         first = request.form['firstName']
         last = request.form['lastName']
@@ -63,7 +64,7 @@ def login():
         if(user):
             return redirect(url_for('success', email=user.email))
         else:
-            return render_template("error.html", error_message="User not found!")
+            return render_template("error.html", error_message="User not found!", is_login=True)
     else:
         return render_template("login.html")
 

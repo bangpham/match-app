@@ -56,7 +56,7 @@ def login():
         if(user):
             return redirect(url_for('success', email=user.email))
         else:
-            return "404"
+            return render_template("error.html", error_message="User not found!")
     else:
         return render_template("login.html")
 

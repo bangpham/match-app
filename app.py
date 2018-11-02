@@ -11,11 +11,6 @@ app = Flask(__name__)
 def main():
     return render_template("index.html")
 
-
-# @app.route('/success/<name>')
-# def success(name):
-#     return render_template("landing.html", name = name)
-
 @app.route('/success/<name>')
 def success(name):
 
@@ -24,9 +19,12 @@ def success(name):
     return render_template("landing.html", name=name)
 
 
-@app.route('/register')
+@app.route('/register', methods=['POST'])
 def register():
-    return render_template("index.html")
+
+    #backend registration logic
+
+    return redirect(url_for('login'))
 
 
 @app.route('/login')

@@ -1,11 +1,16 @@
 import os
-from flask import render_template
-from flask import Flask, redirect, url_for, request, jsonify
+from flask import Flask, redirect, url_for, request, jsonify, render_template
+from flask_sqlalchemy import SQLAlchemy
+#from model import User
 
 
 from business import time
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://warxjakqdspyog:fed8973dd762f9c661f20b33f4afefc9d45baa20d4d5d5d026656529600a606d@ec2-54-83-38-174.compute-1.amazonaws.com:5432/d705i53j7m45gq"
+#os.environ.get("DATABASE_URL")
+db = SQLAlchemy(app)
+
 
 @app.route('/')
 def main():
@@ -27,20 +32,21 @@ def register():
     return redirect(url_for('login'))
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template("login.html")
+    if request.method == 'POST':
+        email = request.form['email']
+        user = User.query.filter_by(email=email).first();
+        if(user):
+            return redirect(url_for('success', email=user.email))
+        else:
+            return redirect(url_for('error', error="Unable to authenticate user!"))
+    else:
+        return render_template("login.html")
 
-
-@app.route('/click_login', methods=['POST', 'GET'])
-def click_login():
-   if request.method == 'POST':
-      user = request.form['nm']
-      return redirect(url_for('success',name=user))
-   else:
-      user = request.args.get('nm')
-      return redirect(url_for('success',name=user))
-
+@app.route('/error')
+def error():
+    return render_template("error.html", error=error)
 
 @app.route('/time')
 def get_time():
@@ -51,4 +57,20 @@ def get_time():
 if __name__ == '__main__':
     # app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
     app.run(host='0.0.0.0', port=5000, debug=True)
+
+class User(db.Model):
+    #__tablename__ = 'users'
+
+    user_id = db.Column(db.Integer)
+    email = db.Column(db.String())
+    first = db.Column(db.String())
+    last = db.Column(db.String())
+
+    def __init__(self, email, first, last):
+        self.email = email
+        self.first = first
+        self.last = last
+    
+    def __repr__(self):
+        return '<email {}>'.format(self.email)
 

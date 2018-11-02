@@ -17,10 +17,6 @@ def register():
 def login():
     return render_template("login.html")
 
-@app.route('/landing')
-def landing():
-    return render_template("landing.html")
-
 @app.route('/time')
 def get_time():
     time_obj = time.Time()

@@ -11,6 +11,22 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://warxjakqdspyog:fed8973dd762f
 #os.environ.get("DATABASE_URL")
 db = SQLAlchemy(app)
 
+class User(db.Model):
+    __tablename__ = 'users'
+
+    user_id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String())
+    first_name = db.Column(db.String())
+    last_name = db.Column(db.String())
+
+    def __init__(self, email, first_name, last_name):
+        self.email = email
+        self.first_name = first_name
+        self.last_name = last_name
+    
+    def __repr__(self):
+        return '<email {}>'.format(self.email)
+
 
 @app.route('/')
 def main():
@@ -40,7 +56,7 @@ def login():
         if(user):
             return redirect(url_for('success', email=user.email))
         else:
-            return redirect(url_for('error', error="Unable to authenticate user!"))
+            return "404"
     else:
         return render_template("login.html")
 
@@ -58,19 +74,5 @@ if __name__ == '__main__':
     # app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
     app.run(host='0.0.0.0', port=5000, debug=True)
 
-class User(db.Model):
-    #__tablename__ = 'users'
 
-    user_id = db.Column(db.Integer)
-    email = db.Column(db.String())
-    first = db.Column(db.String())
-    last = db.Column(db.String())
-
-    def __init__(self, email, first, last):
-        self.email = email
-        self.first = first
-        self.last = last
-    
-    def __repr__(self):
-        return '<email {}>'.format(self.email)
 

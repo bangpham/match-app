@@ -1,3 +1,4 @@
+import os
 from flask import render_template
 from flask import Flask, jsonify
 from business import time
@@ -14,4 +15,5 @@ def get_time():
     return jsonify(time_obj.get_time())
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
+
